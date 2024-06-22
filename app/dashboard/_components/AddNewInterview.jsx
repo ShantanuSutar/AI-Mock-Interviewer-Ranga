@@ -6,15 +6,18 @@ import { Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { chatSession } from "@/utils/geminiAiModel";
 import { useState } from "react";
+import { mockInterview } from "@/utils/schema";
+import { v4 as uuidv4 } from "uuid";
+import { useUser } from "@clerk/nextjs";
+import moment from "moment";
+import { db } from "@/utils/db";
 
 function AddNewInterview() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -22,7 +25,8 @@ function AddNewInterview() {
   const [jobDesc, setJobDesc] = useState("");
   const [jobExperience, setJobExperience] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [jsonResponse, setJsonResponse] = useState("");
+  const [jsonResponse, setJsonResponse] = useState([]);
+  const { user } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,6 +49,26 @@ function AddNewInterview() {
 
     console.log(JSON.parse(MockResponse));
     setJsonResponse(MockResponse);
+    if (MockResponse) {
+      const res = await db
+        .insert(mockInterview)
+        .values({
+          mockId: uuidv4(),
+          jsonMockResp: MockResponse,
+          jobPosition,
+          jobDesc,
+          jobExperience,
+          createdBy: user.primaryEmailAddress.emailAddress,
+          createdAt: moment().format("DD-MM-yyyy"),
+        })
+        .returning({ mocKId: mockInterview.mockId });
+      // console.log("Inserted Id: ", res);
+      if (res) {
+        setOpenDialog(false);
+      }
+    } else {
+      console.log("Error");
+    }
     setLoading(false);
   };
 
@@ -67,8 +91,8 @@ function AddNewInterview() {
           <form onSubmit={handleSubmit}>
             <div>
               <h2>
-                Add details about Job Positon/Role, Job Description and years of
-                experience
+                Add details about Job Position/Role, Job Description and years
+                of experience
               </h2>
               <div className=" mt-7 my-3 flex gap-2 flex-col">
                 <label>Job Role / Job Position</label>
