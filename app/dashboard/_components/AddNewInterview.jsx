@@ -49,7 +49,7 @@ function AddNewInterview() {
       .replace("```", "");
     // console.log(result.response.text());
 
-    console.log(JSON.parse(MockResponse));
+    // console.log(JSON.parse(MockResponse));
     setJsonResponse(MockResponse);
     if (MockResponse) {
       const res = await db

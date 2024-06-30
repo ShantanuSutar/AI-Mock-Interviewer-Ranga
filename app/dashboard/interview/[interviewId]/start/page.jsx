@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { eq } from "drizzle-orm";
 import { mockInterview } from "@/utils/schema";
 import QuestionsSection from "./_components/QuestionsSection";
+import RecordAnswerSection from "./_components/RecordAnswerSection";
 
 function StartInterview({ params }) {
   const [interviewData, setInterviewData] = useState();
@@ -35,6 +36,7 @@ function StartInterview({ params }) {
         />
 
         {/* Video and audio recording */}
+        <RecordAnswerSection />
       </div>
     </div>
   );
