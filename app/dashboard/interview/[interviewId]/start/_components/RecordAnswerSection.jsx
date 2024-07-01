@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { chatSession } from "@/utils/geminiAiModel";
 import { Mic, WebcamIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import useSpeechToText from "react-hook-speech-to-text";
 import Webcam from "react-webcam";
+import { toast } from "sonner";
 
-function RecordAnswerSection() {
+function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex }) {
   const [userAnswer, setUserAnswer] = useState("");
 
   const {
@@ -18,6 +20,34 @@ function RecordAnswerSection() {
     continuous: true,
     useLegacyResults: false,
   });
+
+  const saveUserAnswer = async () => {
+    if (isRecording) {
+      stopSpeechToText();
+      if (userAnswer.length < 10) {
+        toast("Error while saving your answer, please record again !");
+        return;
+      }
+
+      const feedbackPrompt =
+        "Question: " +
+        mockInterviewQuestion[activeQuestionIndex].question +
+        ", User answer:" +
+        userAnswer +
+        ", Depends on question and user answer for given interview question. Please give us rating for answer and feedback as area of improvement if any in just 3 to 5 lines to improve it in JSON format with rating field and feedback field.";
+
+      const result = await chatSession.sendMessage(feedbackPrompt);
+
+      const mockJsonResp = result.response
+        .text()
+        .replace("```json", "")
+        .replace("```", "");
+
+      console.log(mockJsonResp);
+    } else {
+      startSpeechToText();
+    }
+  };
 
   useEffect(() => {
     results.map((result) => {
@@ -37,10 +67,7 @@ function RecordAnswerSection() {
         />
         <Webcam className=" w-full h-80 z-10 " mirrored={true} />
       </div>
-      <Button
-        onClick={isRecording ? stopSpeechToText : startSpeechToText}
-        className=""
-      >
+      <Button onClick={saveUserAnswer} className="">
         {isRecording ? (
           <h2 className="a items-center text-red-500 flex gap-2">
             <Mic size={20} /> <span>Stop Recording</span>

@@ -23,6 +23,9 @@ function StartInterview({ params }) {
       .where(eq(mockInterview.mockId, params.interviewId));
 
     const jsonMockRes = JSON.parse(result[0].jsonMockResp);
+    console.log(jsonMockRes);
+    console.log(result[0]);
+
     setInterviewData(result[0]);
     setMockInterviewQuestion(jsonMockRes);
   };
@@ -36,7 +39,10 @@ function StartInterview({ params }) {
         />
 
         {/* Video and audio recording */}
-        <RecordAnswerSection />
+        <RecordAnswerSection
+          mockInterviewQuestion={mockInterviewQuestion}
+          activeQuestionIndex={activeQuestionIndex}
+        />
       </div>
     </div>
   );
