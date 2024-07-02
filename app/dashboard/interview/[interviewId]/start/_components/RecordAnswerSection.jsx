@@ -26,6 +26,7 @@ function RecordAnswerSection({
     results,
     startSpeechToText,
     stopSpeechToText,
+    setResults,
   } = useSpeechToText({
     continuous: true,
     useLegacyResults: false,
@@ -81,9 +82,9 @@ function RecordAnswerSection({
 
     if (res) {
       toast("User answer recorded successfully !");
+      setUserAnswer("");
     }
-
-    setUserAnswer("");
+    setResults([]);
     setLoading(false);
   };
 
@@ -102,7 +103,7 @@ function RecordAnswerSection({
   if (error) return <p>Web Speech API is not available in this browser 🤷‍</p>;
 
   return (
-    <div className="  mt-5 p-5 flex h-auto flex-col items-center justify-center gap-10">
+    <div className="  pt-20  p-5 flex h-auto flex-col items-center gap-2">
       <div className=" flex items-center justify-center">
         <WebcamIcon
           width={300}
@@ -111,7 +112,7 @@ function RecordAnswerSection({
         />
         <Webcam className=" w-full h-80 z-10 " mirrored={true} />
       </div>
-      <Button disabled={loading} onClick={startStopRecording} className="">
+      <Button disabled={loading} onClick={startStopRecording} className=" mt-6">
         {isRecording ? (
           <h2 className="a items-center text-red-500 flex gap-2">
             <Mic size={20} /> <span>Stop Recording</span>

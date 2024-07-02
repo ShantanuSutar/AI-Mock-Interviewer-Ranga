@@ -5,6 +5,8 @@ import { eq } from "drizzle-orm";
 import { mockInterview } from "@/utils/schema";
 import QuestionsSection from "./_components/QuestionsSection";
 import RecordAnswerSection from "./_components/RecordAnswerSection";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 function StartInterview({ params }) {
   const [interviewData, setInterviewData] = useState();
@@ -44,6 +46,32 @@ function StartInterview({ params }) {
           activeQuestionIndex={activeQuestionIndex}
           interviewData={interviewData}
         />
+      </div>
+      <div className=" flex w-full  lg:w-[50%]   lg:ml-auto gap-6 mb-10 justify-center ">
+        <Button
+          onClick={() => setActiveQuestionIndex((prev) => prev - 1)}
+          disabled={activeQuestionIndex < 1}
+          className=" disabled:cursor-not-allowed disabled:bg-gray-500"
+        >
+          Previous Question
+        </Button>
+        <Button
+          onClick={() => setActiveQuestionIndex((prev) => prev + 1)}
+          disabled={activeQuestionIndex === mockInterviewQuestion?.length - 1}
+          className=" disabled:cursor-not-allowed disabled:bg-gray-500"
+        >
+          Next Question
+        </Button>
+        <Link
+          href={"/dashboard/interview/" + interviewData?.mockId + "/feedback"}
+        >
+          <Button
+            disabled={activeQuestionIndex !== mockInterviewQuestion?.length - 1}
+            className=" disabled:cursor-not-allowed disabled:bg-gray-500"
+          >
+            End Interview
+          </Button>
+        </Link>
       </div>
     </div>
   );
