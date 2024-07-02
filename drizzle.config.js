@@ -3,6 +3,6 @@ export default {
   schema: "./utils/schema.js",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.NEXT_PUBLIC_DRIZZLE_DATABASE_URL,
+    url: "postgresql://shantanusutar17:PsnMzWCr40Rc@ep-lingering-darkness-a1f40ckt.ap-southeast-1.aws.neon.tech/aiInterviewer?sslmode=require",
   },
 };
