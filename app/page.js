@@ -1,11 +1,8 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div>
-      Shantanu
-      <Button>Hello</Button>
-    </div>
-  );
+  redirect("/dashboard");
+  return <div>Shantanu</div>;
 }
