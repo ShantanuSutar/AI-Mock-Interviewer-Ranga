@@ -33,7 +33,7 @@ function AddNewInterview() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(jobDesc, jobExperience, jobPosition);
+    // console.log(jobDesc, jobExperience, jobPosition);
 
     const InputPrompt = `Job Position: ${jobPosition}, Job Description: ${jobDesc}, Years of experience: ${jobExperience}
 

@@ -30,7 +30,7 @@ function Interview({ params }) {
 
     setInterviewData(result[0]);
   };
-  console.log(interviewData);
+  // console.log(interviewData);
 
   return (
     <div className=" my-10 flex justify-center flex-col items-center">

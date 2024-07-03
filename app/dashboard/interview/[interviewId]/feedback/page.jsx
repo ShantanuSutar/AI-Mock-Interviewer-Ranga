@@ -24,7 +24,7 @@ function Feedback({ params }) {
       .orderBy(userAnswerSchema.id);
 
     setLoading(false);
-    console.log(results);
+    // console.log(results);
     setFeedbackList(results);
   };
 

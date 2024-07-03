@@ -47,7 +47,7 @@ function RecordAnswerSection({
 
   const updateUserAns = async () => {
     setLoading(true);
-    console.log(userAnswer);
+    // console.log(userAnswer);
     const feedbackPrompt = `Question: ${mockInterviewQuestion[activeQuestionIndex].question} , User answer: ${userAnswer} ,  Depends on question and user answer for given interview question. Please give us rating for answer and feedback as area of improvement if any in just 3 to 5 lines to improve it in JSON format with rating field and feedback field.
     E.g - 
  {
@@ -66,7 +66,7 @@ function RecordAnswerSection({
       .replace("```json", "")
       .replace("```", "");
 
-    console.log(mockJsonResp);
+    // console.log(mockJsonResp);
     const jsonFeedbackRes = JSON.parse(mockJsonResp);
 
     const res = await db.insert(userAnswerSchema).values({
