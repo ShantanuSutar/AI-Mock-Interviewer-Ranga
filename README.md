@@ -39,6 +39,8 @@ Link - https://ai-mock-interviewer-ranga.vercel.app/
 
 - Next.js: Powers the dynamic and efficient front-end, providing a seamless user experience.
 
+- Shadcn: Enhances the UI component library, offering more design flexibility.
+
 - Tailwind CSS: Ensures a clean, responsive, and modern UI design.
 
 - DrizzleORM: Manages data interactions with a focus on simplicity and type safety.
